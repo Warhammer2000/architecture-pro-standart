@@ -1,0 +1,161 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="C4 Component — Передача ставок (детализация)" id="c4comp_rates">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="2000" pageHeight="1400">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="C4 Component — Передача ставок по депозитам в кол-центры" style="text;html=1;align=center;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="0" width="700" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p_bo" value="Менеджер БО&#xa;депозитов" style="shape=mxgraph.c4.person2;whiteSpace=wrap;html=1;align=center;fillColor=#08427B;fontColor=#ffffff;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="30" y="150" width="130" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p_kc" value="Оператор КЦ" style="shape=mxgraph.c4.person2;whiteSpace=wrap;html=1;align=center;fillColor=#08427B;fontColor=#ffffff;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="50" width="130" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p_pkc" value="Оператор&#xa;партнёрского КЦ" style="shape=mxgraph.c4.person2;whiteSpace=wrap;html=1;align=center;fillColor=#08427B;fontColor=#ffffff;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="450" width="130" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rs_boundary" value="Rate Service [.NET 10]" style="rounded=1;fillColor=none;strokeColor=#438DD5;strokeWidth=2;dashed=1;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="200" y="70" width="380" height="310" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rs_api" value="Rate API&#xa;[Компонент: REST Controller]&#xa;&#xa;GET /api/rates/deposits&#xa;CRUD для управления" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;fontSize=9;verticalAlign=middle;align=center;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="220" y="110" width="170" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rs_calc" value="Rate Calculator&#xa;[Компонент]&#xa;&#xa;Логика расчёта ставок&#xa;(замена Excel)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;fontSize=9;verticalAlign=middle;align=center;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="220" y="220" width="170" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rs_pub" value="Rate Event Publisher&#xa;[Компонент]&#xa;&#xa;Публикует rates.updated&#xa;в Kafka" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;fontSize=9;verticalAlign=middle;align=center;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="400" y="160" width="160" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rs_db" value="Rate DB&#xa;[MS SQL]" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;fontSize=10;boundedLbl=1;size=12;" vertex="1" parent="1">
+          <mxGeometry x="220" y="340" width="100" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="kafka" value="Apache Kafka&#xa;[Топик: rates.updated]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4A843;fontColor=#ffffff;fontSize=11;fontStyle=1;verticalAlign=middle;align=center;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="430" y="420" width="200" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="export_boundary" value="Rate Export Service [.NET 10]" style="rounded=1;fillColor=none;strokeColor=#438DD5;strokeWidth=2;dashed=1;fontSize=12;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="700" y="350" width="300" height="230" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="exp_consumer" value="Kafka Consumer&#xa;[Компонент]&#xa;&#xa;Подписка на&#xa;rates.updated" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;fontSize=9;verticalAlign=middle;align=center;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="720" y="390" width="130" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="exp_gen" value="File Generator&#xa;[Компонент]&#xa;&#xa;Генерация CSV/XLSX" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;fontSize=9;verticalAlign=middle;align=center;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="860" y="390" width="120" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="exp_sftp" value="SFTP Client&#xa;[Компонент]&#xa;&#xa;Отправка файлов" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;fontSize=9;verticalAlign=middle;align=center;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="790" y="490" width="120" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="kc_boundary" value="Система кол-центра [Java Spring Boot]" style="rounded=1;fillColor=none;strokeColor=#438DD5;strokeWidth=2;dashed=1;fontSize=12;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="700" y="60" width="310" height="240" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="kc_rates" value="Rate Display Service&#xa;[Компонент: Java]&#xa;&#xa;Получение и кэширование&#xa;ставок из Rate Service API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;fontSize=9;verticalAlign=middle;align=center;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="720" y="100" width="160" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="kc_ui" value="Web UI&#xa;[Компонент: React.js]&#xa;&#xa;Раздел «Депозитные ставки»&#xa;для операторов" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;fontSize=9;verticalAlign=middle;align=center;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="720" y="200" width="160" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="pkc_sys" value="Система партнёрского&#xa;кол-центра&#xa;[Внешняя система]&#xa;&#xa;SFTP-сервер" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;fontSize=10;fontStyle=1;verticalAlign=middle;align=center;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="570" width="180" height="90" as="geometry"/>
+        </mxCell>
+
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#707070;" edge="1" source="p_bo" target="rs_api" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1l" value="Управляет&#xa;ставками [HTTPS]" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="e1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e2" style="rounded=1;html=1;strokeColor=#438DD5;" edge="1" source="rs_api" target="rs_calc" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e3" style="rounded=1;html=1;strokeColor=#438DD5;" edge="1" source="rs_calc" target="rs_db" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3l" value="SQL" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="e3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e4" style="rounded=1;html=1;strokeColor=#438DD5;" edge="1" source="rs_api" target="rs_pub" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#D4A843;strokeWidth=2;" edge="1" source="rs_pub" target="kafka" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5l" value="Публикует&#xa;rates.updated" style="edgeLabel;html=1;fontSize=9;fillColor=#fff2cc;" vertex="1" connectable="0" parent="e5">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#D4A843;strokeWidth=2;" edge="1" source="kafka" target="exp_consumer" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6l" value="Подписка" style="edgeLabel;html=1;fontSize=9;fillColor=#fff2cc;" vertex="1" connectable="0" parent="e6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e7" style="rounded=1;html=1;strokeColor=#438DD5;" edge="1" source="exp_consumer" target="exp_gen" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e8" style="rounded=1;html=1;strokeColor=#438DD5;" edge="1" source="exp_gen" target="exp_sftp" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#707070;strokeWidth=2;" edge="1" source="exp_sftp" target="pkc_sys" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9l" value="Файл со ставками&#xa;[SFTP]" style="edgeLabel;html=1;fontSize=9;fontStyle=1;" vertex="1" connectable="0" parent="e9">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#438DD5;strokeWidth=2;" edge="1" source="rs_api" target="kc_rates" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="130"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10l" value="GET /api/rates/deposits&#xa;[REST API / HTTPS]" style="edgeLabel;html=1;fontSize=9;fontStyle=1;fillColor=#dae8fc;" vertex="1" connectable="0" parent="e10">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e11" style="rounded=1;html=1;strokeColor=#438DD5;" edge="1" source="kc_rates" target="kc_ui" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#707070;" edge="1" source="p_kc" target="kc_ui" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12l" value="Просматривает&#xa;ставки [Web]" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="e12">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#707070;" edge="1" source="p_pkc" target="pkc_sys" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13l" value="Просматривает&#xa;ставки [UI]" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="e13">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
